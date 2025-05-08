@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'schinaliyevaa/myimage'
-        DOCKER_CREDENTIALS_ID = 'dockerhub-cred-id'
     }
 
     stages {
@@ -27,17 +26,6 @@ pipeline {
                     dockerImage.inside {
                         sh 'npm --version'
                         sh 'node --version'
-                    }
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
-                        dockerImage.push("${env.BUILD_NUMBER}")
-                        dockerImage.push('latest')
                     }
                 }
             }
